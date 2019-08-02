@@ -1,4 +1,4 @@
-let estudie = false
+let estudie = true
 let temasQueEstudie = [
   'Vainilla',
   'html5',
@@ -13,15 +13,27 @@ let VoyAestudiar = new Promise((resolve, reject)=>{
   }
 })
 
+let VoyAVerLosVideosDeLasClases = new Promise((resolve, reject)=>{
+  let solution = () => {if(true){
+    return resolve('te olvidaste compartir pantalla')
+  }else{
+    return reject('no tuve tiempo')
+  }}
+  setTimeout(solution, 2000)
+})
+
+
 // evaluación de promesa con then() y catch()
 VoyAestudiar
   .then( (res) => {
     // extrae la respuesta en el caso de exito (resolve)
-    res.forEach(e => console.log(e))
+    //res.forEach(e => console.log(e))
   })
   .catch( (error) => {
     // extrae la respuesta en el caso de error (reject)
-    console.log(error)
+    //console.log(error)
+  }).finally(()=>{
+    //
   })
 
 // Async & Await 
@@ -33,7 +45,13 @@ async function funcionAsincronnica(){
   }catch(e){
     // extrae la respuesta en el caso de error (reject)    
     console.log(e)
+  }finally{
+    console.log('fin de la operación')
   }
 }
 
-funcionAsincronnica()
+Promise.all([VoyAestudiar, VoyAVerLosVideosDeLasClases])
+  .then(res => console.log(res))
+
+Promise.race([VoyAestudiar, VoyAVerLosVideosDeLasClases])
+  .then(res => console.log(res))
